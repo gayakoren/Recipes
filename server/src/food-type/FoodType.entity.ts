@@ -9,6 +9,9 @@ export class FoodType extends BaseEntity{
   @Column({ type: 'text', nullable: false })
   type: string;
 
+  @Column({ type: "text", nullable: true })
+  pictureUrl: string;
+
   @ManyToMany(() => Recipe, recipe => recipe.foodTypes, { nullable: false })
   recipes: Recipe[];
 }

@@ -7,3 +7,7 @@ export const getRecipes = async (): Promise<Recipe[]> =>
 
 export const getRecipeById = async (id: string): Promise<Recipe> => 
   (await Api.get<Recipe>(`/recipes/${id}`)).data;
+
+export const getRecipesByType = async (type: string): Promise<Recipe[]> => 
+   (await Api.get<Recipe[]>(`/recipes/type/${encodeURIComponent(type)}`)).data;
+   

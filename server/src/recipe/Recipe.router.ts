@@ -46,7 +46,7 @@ router.get('/', async (_req: Request, res: Response<Recipe[]>, next: NextFunctio
   }
 });
 
-router.get('/food-type/:foodTypeUuid', async (req: Request, res: Response<Recipe[]>, next: NextFunction) => {
+router.get('/type/:foodTypeUuid', async (req: Request, res: Response<Recipe[]>, next: NextFunction) => {
   const { foodTypeUuid } = req.params;
 
   try {
@@ -57,7 +57,7 @@ router.get('/food-type/:foodTypeUuid', async (req: Request, res: Response<Recipe
   }
 });
 
-router.get('/food-restriction/:foodRestrictionUuid', async (req: Request, res: Response<Recipe[]>, next: NextFunction) => {
+router.get('/restriction/:foodRestrictionUuid', async (req: Request, res: Response<Recipe[]>, next: NextFunction) => {
   const { foodRestrictionUuid } = req.params;
 
   try {

@@ -1,39 +1,30 @@
 import React from 'react';
 import './App.css';
-import Navbar from './components/navber/Navbar';
-import RecipesPage from './pages/recipes/RecipesPage';
-import RecipeDetailsPage from './pages/recipeDetails/RecipeDetailsPage';
 import { BrowserRouter } from 'react-router-dom';
 import AppRouter from './router/AppRouter';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+
+const theme = createTheme({
+  direction: "rtl", 
+});
+
+const cacheRtl = createCache({
+  key: "mui-rtl",
+  stylisPlugins: [],
+});
 
 function App() {
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      
-      
-      </header> */}
-       {/* <Navbar />
-       <RecipesPage/>
-       <RecipeDetailsPage/> */}
-
+    <CacheProvider value={cacheRtl}>
+      <ThemeProvider theme={theme}>
         <BrowserRouter>
           <AppRouter />
         </BrowserRouter>
-
-
+      </ThemeProvider>
+    </CacheProvider>
     </div>
   );
 }

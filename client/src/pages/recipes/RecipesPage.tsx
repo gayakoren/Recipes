@@ -1,34 +1,48 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import { useGetRecipes } from "../../hooks/api/recipe/recipe.api";
+import { useNavigate, useParams } from "react-router-dom";
+import { useRecipesByType } from "../../hooks/api/recipe/recipe.api";
 import RecipeCard from "../../components/recipeCard/RecipeCard";
 import RecipeCardSkeleton from "../../components/recipeCard/RecipeCardSkeleton";
+import BackButton from "../../components/backButton/BackButton";
+import SearchBar from "../../components/searchBar/SearchBar";
 
 const RecipesPage: React.FC = () => {
-  const { data: recipes, isLoading, error } = useGetRecipes();
+  const { foodTypeUuid } = useParams<{ foodTypeUuid: string }>();
+  const navigate = useNavigate();
+
+  const { data: recipes, isLoading, error } = useRecipesByType(foodTypeUuid ?? "");
 
   const handleView = (id: string) => {
-    alert(`View recipe with ID: ${id}`);
+    navigate(`/recipes/${encodeURIComponent(id)}`);
   };
 
   if (error) return <p>Failed to load recipes.</p>;
 
 return (
     <Box p={3}>
-      <Grid container spacing={2}>
-        {isLoading
-          ? Array.from({ length: 6 }).map((_, i) => (
-              <Grid size={{ xs:12, sm:6, md:4, lg:3 }} key={i}>
-                <RecipeCardSkeleton />
-              </Grid>
-            ))
-          : recipes?.map((recipe) => (
-              <Grid  size={{ xs:12, sm:6, md:4, lg:3 }} key={recipe.uuid}>
-                <RecipeCard recipe={recipe} onView={handleView} />
-              </Grid>
-            ))}
-      </Grid>
+      <BackButton/>
+      <SearchBar onSearch={()=>{}}/>
+      {isLoading ? (
+        <Grid container spacing={2} justifyContent="flex-end">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <Grid size={{ xs:12, sm:6, md:4, lg:3 }} key={i}>
+              <RecipeCardSkeleton />
+            </Grid>
+          ))}
+        </Grid>
+      ) : recipes && recipes.length === 0 ? (
+        <p>No recipes found for this category.</p>
+      ) : (
+        <Grid container spacing={2} justifyContent="flex-end">
+          {recipes?.map((recipe) => (
+            <Grid size={{ xs:12, sm:6, md:4, lg:3 }} key={recipe.uuid}>
+              <RecipeCard recipe={recipe} onView={handleView} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
     </Box>
   );
 };

@@ -4,4 +4,5 @@ export type FoodType = {
   type: string;
   recipes: Recipe[];
   uuid: string;
+  pictureUrl: string;
 };

@@ -20,9 +20,6 @@ const Navbar: React.FC = () => {
           <Button color="inherit" component={RouterLink} to={`${BASE_PATH}/addRecipe`}>
             הוספת מתכון
           </Button>
-          <Button color="inherit" component={RouterLink} to={`${BASE_PATH}/searchRecipe`}>
-            חיפוש
-          </Button>
           <Button color="inherit" component={RouterLink} to="/">
             בית
           </Button>

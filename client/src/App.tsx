@@ -5,6 +5,7 @@ import AppRouter from './router/AppRouter';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
+import rtlPlugin from "stylis-plugin-rtl";
 
 const theme = createTheme({
   direction: "rtl", 
@@ -12,7 +13,7 @@ const theme = createTheme({
 
 const cacheRtl = createCache({
   key: "mui-rtl",
-  stylisPlugins: [],
+  stylisPlugins: [], // todo check rtlPlugin
 });
 
 function App() {

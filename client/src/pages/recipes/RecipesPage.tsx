@@ -6,7 +6,6 @@ import { useRecipesByType } from "../../hooks/api/recipe/recipe.api";
 import RecipeCard from "../../components/recipeCard/RecipeCard";
 import RecipeCardSkeleton from "../../components/recipeCard/RecipeCardSkeleton";
 import BackButton from "../../components/backButton/BackButton";
-import SearchBar from "../../components/searchBar/SearchBar";
 
 const RecipesPage: React.FC = () => {
   const { foodTypeUuid } = useParams<{ foodTypeUuid: string }>();
@@ -23,7 +22,6 @@ const RecipesPage: React.FC = () => {
 return (
     <Box p={3}>
       <BackButton/>
-      <SearchBar onSearch={()=>{}}/>
       {isLoading ? (
         <Grid container spacing={2} justifyContent="flex-end">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -33,7 +31,7 @@ return (
           ))}
         </Grid>
       ) : recipes && recipes.length === 0 ? (
-        <p>No recipes found for this category.</p>
+        <p>לא נמצאו מתכונים לקטגוריה זו</p>
       ) : (
         <Grid container spacing={2} justifyContent="flex-end">
           {recipes?.map((recipe) => (

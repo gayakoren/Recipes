@@ -3,7 +3,6 @@ import HomePage from "../pages/home/HomePage";
 import RecipeDetailsPage from "../pages/recipeDetails/RecipeDetailsPage";
 import RecipesPage from "../pages/recipes/RecipesPage";
 import AddRecipePage from "../pages/addRecipe/AddRecipe";
-import SearchRecipePage from "../pages/searchRecipe/SearchRecipe";
 
 export const BASE_PATH = "/recipes";
 export const HOME_BASE_PATH = `${BASE_PATH}/home`;
@@ -12,7 +11,6 @@ export const appRoutes = [
   { path: HOME_BASE_PATH, element: <HomePage /> },
   { path: BASE_PATH, element: <RecipesPage /> },
   { path: `${BASE_PATH}/addRecipe`, element: <AddRecipePage /> },
-  { path: `${BASE_PATH}/searchRecipe`, element: <SearchRecipePage /> },
   { path: `${BASE_PATH}/type/:foodTypeUuid`, element: <RecipesPage /> },
   { path: `${BASE_PATH}/:id`, element: <RecipeDetailsPage /> },
   { path: `${BASE_PATH}/*`, element: <Navigate to={HOME_BASE_PATH} replace /> },

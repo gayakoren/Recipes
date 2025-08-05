@@ -13,19 +13,24 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     onSearch(term);
   };
 
+   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setTerm(value);
+    onSearch(value);
+  }; 
+
   return (
-    <Box sx={{ display: "flex", gap: 1, mb: 2 }} dir="rtl">
-      <TextField
-        label="חפש מתכון"
-        variant="outlined"
-        size="small"
-        value={term}
-        onChange={(e) => setTerm(e.target.value)}
-        sx={{ flex: 1 }}
-      />
+    <Box sx={{ display: "flex", ml: 5, mb: 30 }}>
       <IconButton color="primary" onClick={handleSearch}>
         <SearchIcon />
       </IconButton>
+      <TextField
+        variant="outlined"
+        size="small"
+        value={term}
+        onChange={handleChange}
+        sx={{ flex: 1 }}
+      />
     </Box>
   );
 };

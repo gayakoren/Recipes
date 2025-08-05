@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Recipe } from '@shared/types/recipe.type'
-import { getRecipes } from './recipe.service';
+import { addRecipe, getRecipes } from './recipe.service';
 import { getRecipesByType } from "./recipe.service";
 import { getRecipeById } from "./recipe.service";
 
@@ -33,3 +33,8 @@ export const useRecipeById = (uuid: string) => {
     staleTime: 5 * 60 * 1000,            
   });
 };
+
+export const useAddRecipe = () =>
+  useMutation({
+    mutationFn: addRecipe,
+  });

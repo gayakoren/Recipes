@@ -34,7 +34,8 @@ export const useRecipeById = (uuid: string) => {
   });
 };
 
-export const useAddRecipe = () =>
-  useMutation({
+export const useAddRecipe = () => {
+  return useMutation({
     mutationFn: addRecipe,
   });
+};

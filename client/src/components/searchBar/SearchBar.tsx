@@ -20,7 +20,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   }; 
 
   return (
-    <Box sx={{ display: "flex", ml: 5, mb: 30 }}>
+    <Box sx={{ display: "flex", ml: 5, mb: 20 }}>
       <IconButton color="primary" onClick={handleSearch}>
         <SearchIcon />
       </IconButton>

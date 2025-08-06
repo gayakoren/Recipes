@@ -1,6 +1,6 @@
 import Recipe from './recipe.type';
 
-export type FoodRestriction = {
+export interface FoodRestriction {
   restriction: string;
   recipes: Recipe[];
   uuid: string;

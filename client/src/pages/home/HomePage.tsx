@@ -39,7 +39,7 @@ const HomePage: React.FC = () => {
       <SearchBar onSearch={setSearchTerm}/>
        
        {searchTerm === "" ? (
-        <Grid container spacing={2} justifyContent="flex-end">
+        <Grid container spacing={2} justifyContent="flex-start">
           {foodTypes?.map((type) => (
           <Grid size={{ xs:12, sm:6, md:4, lg:3 }} key={type.uuid} onClick={() => handleCardClick(type.uuid)}> 
             <FoodTypeCard name={type.type} image={type.pictureUrl} /> 

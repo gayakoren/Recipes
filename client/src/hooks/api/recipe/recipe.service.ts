@@ -1,4 +1,5 @@
 import { Recipe } from '@shared/types/recipe.type';
+  import { CreateRecipeDto } from "@shared/types/dto/createRecipe.dto";
 
 import Api from '../../../api/api';
 
@@ -11,7 +12,7 @@ export const getRecipeById = async (id: string): Promise<Recipe> =>
 export const getRecipesByType = async (type: string): Promise<Recipe[]> => 
    (await Api.get<Recipe[]>(`/recipes/type/${encodeURIComponent(type)}`)).data;
    
-export const addRecipe = async (newRecipe: Partial<Recipe>) => {
+export const addRecipe = async (newRecipe: CreateRecipeDto) => {
   const { data } = await Api.post("/recipes", newRecipe);
   return data;
 };

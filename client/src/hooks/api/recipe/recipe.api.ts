@@ -11,7 +11,7 @@ const USE_RECIPE_ID_KEY = 'useRecipeId';
 
 export const useGetRecipes = () =>
   useQuery<Recipe[], Error>({
-    queryFn: () => getRecipes(),
+    queryFn: getRecipes,
     queryKey: [USE_RECIPES_KEY],
     staleTime: 10 * 60 * 1000,
   });

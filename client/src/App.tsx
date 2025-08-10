@@ -13,7 +13,7 @@ const theme = createTheme({
 
 const cacheRtl = createCache({
   key: "mui-rtl",
-  stylisPlugins: [], // todo check rtlPlugin
+  stylisPlugins: [],
 });
 
 function App() {

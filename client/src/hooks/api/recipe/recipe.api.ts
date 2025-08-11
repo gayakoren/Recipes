@@ -5,7 +5,7 @@ import { getRecipesByType } from "./recipe.service";
 import { getRecipeById } from "./recipe.service";
 
 
-const USE_RECIPES_KEY = 'useRecipes';
+export const USE_RECIPES_KEY = 'useRecipes';
 const USE_RECIPES_TYPE_KEY = 'useRecipesType';
 const USE_RECIPE_ID_KEY = 'useRecipeId';
 

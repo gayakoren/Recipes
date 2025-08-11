@@ -17,30 +17,35 @@ import Swal from "sweetalert2";
 import { useQueryClient } from "@tanstack/react-query";
 import FoodTypeDropdown from "../../components/foodTypeDropdown/FoodTypeDropdown";
 import FoodRestrictionDropdown from "../../components/foodRestrictionDropdown/FoodRestrictionDropdown";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { recipeSchema } from "@shared/validation/AddRecipe.validation"; 
+import zod from "zod";
+import { USE_RECIPES_KEY } from "../../hooks/api/recipe/recipe.api"
 
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 
-const USE_RECIPES_KEY = "useRecipes";
+type RecipeFormValues = zod.infer<typeof recipeSchema>;
 
 const AddRecipePage: React.FC = () => {
   const navigate = useNavigate();
   const { mutate: addRecipe, isPending } = useAddRecipe();
   const queryClient = useQueryClient();
 
-  const { control, register, handleSubmit } = useForm({
-    defaultValues: {
-      name: "",
-      workingTime: "",
-      makingTime: "",
-      difficultyLevel: DifficultyLevel.EASY,
-      kosher: Kosher.NOT_KOSHER,
-      pictureUrl: "",
-      ingredients: [{ name: "", amount: "", unit: "" }],
-      instructions: [{ description: "" }],
-      foodTypes: [],
-      foodRestrictions: [],
-    },
-  });
+  const { control, register, handleSubmit, formState: { errors }, reset } = useForm<RecipeFormValues>({
+  resolver: zodResolver(recipeSchema),
+  defaultValues: {
+    name: "",
+    workingTime: 1,
+    makingTime: 1,
+    difficultyLevel: DifficultyLevel.EASY,
+    kosher: Kosher.NOT_KOSHER,
+    pictureUrl: "",
+    ingredients: [{ name: "", amount: "", unit: "" }],
+    instructions: [{ step: 1, description: "" }],
+    foodTypes: [],
+    foodRestrictions: [],
+  },
+});
 
   const {
     fields: ingredientFields,
@@ -65,6 +70,7 @@ const AddRecipePage: React.FC = () => {
 
     addRecipe(payload, {
       onSuccess: () => {
+        reset();
         Swal.fire({
           icon: "success",
           title: "איזה כיף",
@@ -94,15 +100,26 @@ const AddRecipePage: React.FC = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
-          <TextField label="שם המתכון" {...register("name", { required: true })} />
-          <TextField label="זמן עבודה (דקות)" type="number" {...register("workingTime", { required: true })} />
-          <TextField label="זמן הכנה (דקות)" type="number" {...register("makingTime", { required: true })} />
+          <TextField
+            label="שם המתכון"
+            {...register("name")}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+          />
+          <TextField label="זמן עבודה (דקות)" type="number" {...register("workingTime", { valueAsNumber: true })} error={!!errors.workingTime}
+            helperText={errors.name?.message}/>
+
+          <TextField label="זמן הכנה (דקות)" type="number" {...register("makingTime", { valueAsNumber: true })} error={!!errors.makingTime}
+            helperText={errors.name?.message}/>
 
           <Controller
             name="foodTypes"
             control={control}
             render={({ field }) => (
-              <FoodTypeDropdown value={field.value} onChange={field.onChange} />
+              <FoodTypeDropdown
+                value={field.value?.map((ft) => ft.uuid) || []}
+                onChange={(uuids) => field.onChange(uuids.map((uuid) => ({ uuid })))}
+              />
             )}
           />
 
@@ -110,7 +127,10 @@ const AddRecipePage: React.FC = () => {
             name="foodRestrictions"
             control={control}
             render={({ field }) => (
-              <FoodRestrictionDropdown value={field.value} onChange={field.onChange} />
+              <FoodRestrictionDropdown
+                value={field.value?.map((ft) => ft.uuid) || []}
+                onChange={(uuids) => field.onChange(uuids.map((uuid) => ({ uuid })))}
+              />
             )}
           />
 
@@ -143,9 +163,9 @@ const AddRecipePage: React.FC = () => {
           <Typography variant="h6" mt={2}>מרכיבים</Typography>
           {ingredientFields.map((field, i) => (
             <Stack key={field.id} direction="row" spacing={1}>
-              <TextField label="שם" {...register(`ingredients.${i}.name`, { required: true })} />
-              <TextField label="כמות" {...register(`ingredients.${i}.amount`, { required: true })} />
-              <TextField label="יחידה" {...register(`ingredients.${i}.unit`, { required: true })} />
+              <TextField label="שם" {...register(`ingredients.${i}.name`)} />
+              <TextField label="כמות" {...register(`ingredients.${i}.amount`)} />
+              <TextField label="יחידה" {...register(`ingredients.${i}.unit`)} />
               <IconButton onClick={() => removeIngredient(i)}><DeleteIcon /></IconButton>
             </Stack>
           ))}
@@ -156,11 +176,19 @@ const AddRecipePage: React.FC = () => {
           <Typography variant="h6" mt={2}>אופן ההכנה</Typography>
           {instructionFields.map((field, i) => (
             <Stack key={field.id} direction="row" spacing={1}>
-              <TextField fullWidth label={`שלב ${i + 1}`} {...register(`instructions.${i}.description`, { required: true })} />
+              <TextField fullWidth label={`שלב ${i + 1}`} {...register(`instructions.${i}.description`)} />
               <IconButton onClick={() => removeInstruction(i)}><DeleteIcon /></IconButton>
             </Stack>
           ))}
-          <Button variant="outlined" onClick={() => addInstruction({ description: "" })}>
+          <Button
+            variant="outlined"
+            onClick={() =>
+              addInstruction({
+                step: instructionFields.length + 1,
+                description: "",
+              })
+            }
+          >
             הוסף שלב
           </Button>
 

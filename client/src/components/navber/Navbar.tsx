@@ -1,4 +1,3 @@
-// src/components/Navbar.tsx
 import React from "react"
 import AppBar from "@mui/material/AppBar"
 import Toolbar from "@mui/material/Toolbar"
@@ -7,7 +6,7 @@ import Button from "@mui/material/Button"
 import Box from "@mui/material/Box"
 
 import { Link as RouterLink } from "react-router-dom"
-// import { BASE_PATH, HOME_BASE_PATH } from "../../router/routes.const";
+export const BASE_PATH = "/recipes";
 
 const Navbar: React.FC = () => {
   return (
@@ -18,11 +17,8 @@ const Navbar: React.FC = () => {
         </Typography>
 
         <Box>
-          <Button color="inherit" component={RouterLink} to="/addRecipe">
+          <Button color="inherit" component={RouterLink} to={`${BASE_PATH}/addRecipe`}>
             הוספת מתכון
-          </Button>
-          <Button color="inherit" component={RouterLink} to="/searchRecipe">
-            חיפוש
           </Button>
           <Button color="inherit" component={RouterLink} to="/">
             בית

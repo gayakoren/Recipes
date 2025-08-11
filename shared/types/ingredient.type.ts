@@ -1,6 +1,6 @@
 import Recipe from './recipe.type';
 
-export type Ingredient = {
+export interface Ingredient {
   name: string;
   amount: string;
   unit: string;

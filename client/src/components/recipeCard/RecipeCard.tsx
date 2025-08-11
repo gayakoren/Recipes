@@ -35,7 +35,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onView }) => {
       </CardContent>
       <CardActions>
         <Button size="small" onClick={() => onView?.(recipe.uuid)}>
-          View Recipe
+          הצג מתכון
         </Button>
       </CardActions>
     </Card>

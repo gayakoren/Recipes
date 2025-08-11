@@ -1,7 +1,8 @@
 import Recipe from './recipe.type';
 
-export type FoodType = {
+export interface FoodType {
   type: string;
   recipes: Recipe[];
   uuid: string;
+  pictureUrl: string;
 };

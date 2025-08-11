@@ -5,7 +5,7 @@ import { FoodType } from "./foodType.type";
 import { Ingredient } from "./ingredient.type";
 import { Instruction } from "./instruction.type";
 
-export type Recipe = {
+export interface Recipe {
   uuid: string;
   name: string;
   workingTime: number;

@@ -1,6 +1,6 @@
 export enum Kosher {
-  DAIRY = 'Dairy',
-  MEAT = 'Meat',
-  PARVE = 'Parve',
-  NOT_KOSHER = 'Not Kosher',
+  DAIRY = 'חלבי',
+  MEAT = 'בשרי',
+  PARVE = 'פרווה',
+  NOT_KOSHER = 'לא כשר',
 }

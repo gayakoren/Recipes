@@ -1,6 +1,6 @@
 import Recipe from './recipe.type';
 
-export type Instruction = {
+export interface Instruction {
   step: number;
   description: string;
   recipe: Recipe;
